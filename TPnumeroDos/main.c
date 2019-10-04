@@ -1,98 +1,97 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define TRUE 1
+#include <string.h>
+#include <conio.h>
+#include "Funciones.h"
+
 #define TAM 1000
-
-struct
-    {
-        int id;
-        int sector;
-        int isEmpty;
-        float salary;
-        char name[51];
-        char lastName[51];
-
-    }typedef employee;
-
-int initEmployees(employee* list,int len);
-int addEmployees(employee* list,int len, int id, char name[], char lastName[], float salary, int sector);
 
 int main()
 {
-    int retorno;
-    int opcion;
-    int id;
-    int sector;
-    int isEmpty;
-    float salary;
-    char name[51];
-    char lastName[51];
-    employee empleados[TAM];
+    int id = 1000;
+    int flag = 0;
+    employee empleado[TAM];
+    char salir = 'n';
 
-    retorno=initEmployees(empleados,TAM);
+    initEmployees(empleado, TAM);
 
-    printf("\n*****Menu de opciones*****\n\n");
-    printf("1. Alta.\n");
-    printf("2. Modificar.\n");
-    printf("3. Baja.\n");
-    printf("4. Informar el listado de los empleados ordenados alfabeticamente por Apellido y Sector.\n");
-    printf("%s%c%s","5. Informar el total y promedio de los salarios, y cu",160,"ntos empleados superan el salario promedio.\n");
-    scanf("%i", &opcion);
-    switch(opcion)
+    do
     {
-    case 1:
-            printf("Ingrese su ID: ");
-            scanf("%i", &id);
-            printf("Ingrese su sector: ");
-            scanf("%i", &sector);
-            printf("Ingrese su salario: ");
-            scanf("%f.2", &salary);
-            printf("Ingrese su nombre: ");
-            gets(name);
-            printf("Ingrese su apellido: ");
-            scanf("%s", lastName);
-            retorno=addEmployees(empleados, TAM, id, name, lastName, salary, sector);
-
-        break;
-
-    case 2:
-
-        break;
-
-    case 3:
-
-        break;
-    case 4:
-
-        break;
-
-    case 5:
-
-        break;
-    }
-}
-
-int initEmployees(employee* list,int len)
-{
-    for(int i=0;i<len;i++)
+        for(int i=0; i < TAM; i++)
         {
-            list[i].isEmpty=TRUE;
+            if(empleado[i].isEmpty == 0)
+            {
+                flag = 1;
+                break;
+            }
         }
-    return 0;
-}
 
-int addEmployees(employee* list,int len, int id, char name[], char lastName[], float salary, int sector)
-{
-    for(int i=0;i<len;i++)
+        switch(menu())
         {
-            if(list[i].isEmpty==1)
+            case 1:
+                if(addEmployees(empleado, TAM, id));
                 {
-                    list[i].id = id;
-                    strcpy(list[i].name, name);
-                    strcpy(list[i].lastName, lastName);
-                    list[i].salary = salary;
-                    list[i].sector = sector;
-                    return 0;
+                    id++;
                 }
+                break;
+
+            case 2:
+                if(flag == 1)
+                {
+                    modifyEmployee(empleado, TAM);
+                }
+                else
+                {
+                    printf("\nNo hay empleados cargados en el sistema\n\n");
+                }
+                break;
+
+
+            case 3:
+                if(flag == 1)
+                {
+                    removeEmployee(empleado, TAM);
+                }
+                else
+                {
+                    printf("\nNo hay empleados cargados en el sistema\n\n");
+                }
+                break;
+
+
+            case 4:
+                if(flag == 1)
+                {
+                    printReports(empleado, TAM);
+                }
+                else
+                {
+                    printf("\nNo hay empleados cargados en el sistema\n\n");
+                }
+                break;
+
+            case 6:
+                printEmployees(empleado, TAM);
+                break;
+
+            case 5:
+                printf("\nDesea salir?(s/n): ");
+                fflush(stdin);
+                salir = getche();
+                while(salir != 's' && salir != 'n')
+                {
+                    printf("\nError. Ingrese s o n: ");
+                    fflush(stdin);
+                    salir = getche();
+                }
+                printf("\n\n");
+                break;
         }
+        system("pause");
+
+        flag = 0;
+    }
+    while(salir == 'n');
+
+    return 0;
 }

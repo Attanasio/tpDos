@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1570227966 source:/home/alumno/Documentos/tpDos-master/TPnumeroDos/Funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Funciones.h"
+
+1570227821 /home/alumno/Documentos/tpDos-master/TPnumeroDos/Funciones.h
+
+1570227912 source:/home/alumno/Documentos/tpDos-master/TPnumeroDos/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Funciones.h"
+
